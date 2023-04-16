@@ -18,8 +18,10 @@ from django.urls import path
 from todo import views
 
 urlpatterns = [
+    # Healthcheck
+    path('healthcheck', views.healthcheck, name='healthcheck'),
+    # Admin
     path('admin/', admin.site.urls),
-
     # Auth
     path('signup/', views.signupuser, name='signupuser'),
     path('logout/', views.logoutuser, name='logoutuser'),

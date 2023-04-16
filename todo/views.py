@@ -7,6 +7,11 @@ from django.utils import timezone
 from .forms import TodoForm
 from .models import Todo
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
+
+def healthcheck(request):
+    return JsonResponse({'status': 'ok'})
 
 
 def home(request):
