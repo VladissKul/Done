@@ -7,7 +7,7 @@ local_settings.py
 .idea/
 *.py[cod]
 .venv
-.env
+.env*
 env/
 venv/
 ENV/

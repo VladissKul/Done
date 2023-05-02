@@ -4,10 +4,19 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.utils import timezone
+from rest_framework.permissions import IsAdminUser
 from .forms import TodoForm
 from .models import Todo
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from rest_framework import viewsets
+from .serializers import TodoSerializer
+
+
+class TodoViewSet(viewsets.ModelViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    permission_classes = (IsAdminUser,)
 
 
 def healthcheck(request):

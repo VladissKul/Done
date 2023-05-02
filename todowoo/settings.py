@@ -3,7 +3,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv, find_dotenv
 
-load_dotenv(find_dotenv())
+load_dotenv(find_dotenv(filename='.env_develop'))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,8 +20,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'todo',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -103,8 +110,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login'
-
-# try:
-#     from .local_settings import *
-# except ImportError:
-#     print('Looks like no local file. You must be on production')
