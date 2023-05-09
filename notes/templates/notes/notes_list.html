@@ -1,0 +1,27 @@
+{% extends "todo/base.html" %}
+
+{% block content %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+            <h1>Ваши заметки</h1>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-10">
+        {% if notes %}
+            <div class="list-group">
+                {% for note in notes %}
+                    <a href="{% url 'note_detail' note.id %}" class="list-group-item list-group-item-action"><b>{{ note.title }}</b></a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h2>У вас нет заметок</h2>
+            <br>
+            <a role="button" class="btn btn-info" href="{% url 'create_note' %}">Создать заметку</a>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

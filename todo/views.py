@@ -4,7 +4,6 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.utils import timezone
-from django.views import View
 from django.views.generic import ListView
 from rest_framework.permissions import IsAdminUser
 from .forms import TodoForm

@@ -18,6 +18,7 @@ from django.urls import path, include
 from todo import views
 from rest_framework import routers
 from todo.views import TodoViewSet, HomeView
+from notes.views import *
 
 todo_router = routers.SimpleRouter()
 todo_router.register(r'all_todos', TodoViewSet)
@@ -40,6 +41,11 @@ urlpatterns = [
     path('todo/<int:todo_pk>', views.viewtodo, name='viewtodo'),
     path('todo/<int:todo_pk>/complete', views.completetodo, name='completetodo'),
     path('todo/<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),
-    path('', HomeView.as_view(), name='home')
+    path('', HomeView.as_view(), name='home'),
+    # Notes
+    path('notes/create/', create_note, name='create_note'),
+    path('notes_list/', notes_list, name='notes_list'),
+    path('notes_list/<int:note_id>', note_detail, name='note_detail'),
+    path('notes_list/<int:note_id>/delete', delete_note, name='delete_note'),
 
 ]
