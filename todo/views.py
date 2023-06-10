@@ -4,7 +4,6 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.utils import timezone
-from django.views.generic import ListView
 from rest_framework.permissions import IsAdminUser
 from .forms import TodoForm
 from .models import Todo
@@ -24,9 +23,11 @@ def healthcheck(request):
     return JsonResponse({'status': 'ok'})
 
 
-class HomeView(ListView):
-    model = Todo
-    template_name = 'todo/home.html'
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('current_todos')
+    else:
+        return render(request, 'todo/home.html')
 
 
 def signupuser(request):
@@ -38,7 +39,7 @@ def signupuser(request):
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)
-                return redirect('currenttodos')
+                return redirect('current_todos')
             except IntegrityError:
                 return render(request, 'todo/signupuser.html',
                               {'form': UserCreationForm, 'error': 'Это имя пользователя уже занято.'})
@@ -58,22 +59,22 @@ def loginuser(request):
                           {'form': AuthenticationForm(), 'error': 'Пароль или имя пользователя не совпадают'})
         else:
             login(request, user)
-            return redirect('currenttodos')
+            return redirect('current_todos')
 
 
 @login_required
-def createtodo(request):
+def create_todo(request):
     if request.method == 'GET':
-        return render(request, 'todo/createtodo.html', {'form': TodoForm()})
+        return render(request, 'todo/create_todo.html', {'form': TodoForm()})
     else:
         try:
             form = TodoForm(request.POST)
             newtodo = form.save(commit=False)
             newtodo.user = request.user
             newtodo.save()
-            return redirect('currenttodos')
+            return redirect('current_todos')
         except ValueError:
-            return render(request, 'todo/createtodo.html', {'form': TodoForm(), 'error': 'Bad data passed in'})
+            return render(request, 'todo/create_todo.html', {'form': TodoForm(), 'error': 'Bad data passed in'})
 
 
 @login_required
@@ -82,7 +83,7 @@ def completetodo(request, todo_pk):
     if request.method == 'POST':
         todo.datecompleted = timezone.now()
         todo.save()
-        return redirect('currenttodos')
+        return redirect('current_todos')
 
 
 @login_required
@@ -90,7 +91,7 @@ def deletetodo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
         todo.delete()
-        return redirect('currenttodos')
+        return redirect('current_todos')
 
 
 @login_required
@@ -103,7 +104,7 @@ def viewtodo(request, todo_pk):
         try:
             form = TodoForm(request.POST, instance=todo)
             form.save()
-            return redirect('currenttodos')
+            return redirect('current_todos')
         except ValueError:
             return render(request, 'todo/viewtodo.html', {'todo': todo, 'form': form, 'error': 'Bad info'})
 
@@ -116,12 +117,12 @@ def logoutuser(request):
 
 
 @login_required
-def currenttodos(request):
+def current_todos(request):
     todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True)
-    return render(request, 'todo/currenttodos.html', {'todos': todos})
+    return render(request, 'todo/current_todos.html', {'todos': todos})
 
 
 @login_required
-def completedtodos(request):
+def completed_todos(request):
     todos = Todo.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
-    return render(request, 'todo/completedtodos.html', {'todos': todos})
+    return render(request, 'todo/completed_todos.html', {'todos': todos})

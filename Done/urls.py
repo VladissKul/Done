@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from todo import views
 from rest_framework import routers
-from todo.views import TodoViewSet, HomeView
+from todo.views import TodoViewSet
 from notes.views import *
 
 todo_router = routers.SimpleRouter()
@@ -35,17 +35,19 @@ urlpatterns = [
     path('logout/', views.logoutuser, name='logoutuser'),
     path('login/', views.loginuser, name='loginuser'),
     # Todos
-    path('create/', views.createtodo, name='createtodo'),
-    path('current/', views.currenttodos, name='currenttodos'),
-    path('completed/', views.completedtodos, name='completedtodos'),
+    path('create_todo/', views.create_todo, name='create_todo'),
+    path('current_todos/', views.current_todos, name='current_todos'),
+    path('completed_todos/', views.completed_todos, name='completed_todos'),
     path('todo/<int:todo_pk>', views.viewtodo, name='viewtodo'),
     path('todo/<int:todo_pk>/complete', views.completetodo, name='completetodo'),
     path('todo/<int:todo_pk>/delete', views.deletetodo, name='deletetodo'),
-    path('', HomeView.as_view(), name='home'),
+    path('', views.home, name='home'),
     # Notes
-    path('notes/create/', create_note, name='create_note'),
+    path('create_note', create_note, name='create_note'),
     path('notes_list/', notes_list, name='notes_list'),
     path('notes_list/<int:note_id>', note_detail, name='note_detail'),
     path('notes_list/<int:note_id>/delete', delete_note, name='delete_note'),
 
 ]
+
+

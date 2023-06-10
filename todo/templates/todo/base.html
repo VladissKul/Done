@@ -2,11 +2,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
+<!--    <meta http-equiv="Refresh" content="3"/>-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="icon" type="image/png"  href="{% static 'todo/logo.png' %}">
     <title>Done</title>
@@ -28,16 +27,10 @@
         <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item {{ current }}">
-                    <a class="nav-link active" href="{% url 'currenttodos' %}">Активные</a>
-                </li>
-                <li class="nav-item {{ completed }}">
-                    <a class="nav-link active" href="{% url 'completedtodos' %}">Завершенные</a>
-                </li>
-                <li class="nav-item {{ create }}">
-                    <a class="nav-link active" href="{% url 'createtodo' %}">Создать задачу</a>
+                    <a class="nav-link active" href="{% url 'current_todos' %}">Задачи</a>
                 </li>
                 <li class="nav-item {{ notes_list }}">
-                    <a class="nav-link active" href="{% url 'notes_list' %}">Список заметок</a>
+                    <a class="nav-link active" href="{% url 'notes_list' %}">Заметки</a>
                 </li>
 
         </ul>
