@@ -40,17 +40,17 @@
         <text class="mt-2 text-end">{{ user.username }} |</text>
                 <li class="nav-item">
                     <a href="#" onclick="$('#signOutBtn').click()" class="nav-link active">Выйти</a>
-                    <form style='display: none;' method="POST" action="{% url 'logoutuser' %}">
+                    <form style='display: none;' method="POST" action="{% url 'logout_user' %}">
                         {% csrf_token %}
                         <button id="signOutBtn" type="submit">Выйти</button>
                     </form>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'signupuser' %}">Зарегистрироваться</a>
+                    <a class="nav-link active" href="{% url 'signup_user' %}">Зарегистрироваться</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'loginuser' %}">Войти</a>
+                    <a class="nav-link active" href="{% url 'login_user' %}">Войти</a>
                 </li>
             {% endif %}
         </ul>

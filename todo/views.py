@@ -30,9 +30,9 @@ def home(request):
         return render(request, 'todo/home.html')
 
 
-def signupuser(request):
+def signup_user(request):
     if request.method == 'GET':
-        return render(request, 'todo/signupuser.html', {'form': UserCreationForm})
+        return render(request, 'todo/signup_user.html', {'form': UserCreationForm})
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
@@ -41,21 +41,21 @@ def signupuser(request):
                 login(request, user)
                 return redirect('current_todos')
             except IntegrityError:
-                return render(request, 'todo/signupuser.html',
+                return render(request, 'todo/signup_user.html',
                               {'form': UserCreationForm, 'error': 'Это имя пользователя уже занято.'})
 
         else:
-            return render(request, 'todo/signupuser.html',
+            return render(request, 'todo/signup_user.html',
                           {'form': UserCreationForm, 'error': 'Пароли не совпадают. Попробуйте еще раз.'})
 
 
-def loginuser(request):
+def login_user(request):
     if request.method == 'GET':
-        return render(request, 'todo/loginuser.html', {'form': AuthenticationForm})
+        return render(request, 'todo/login_user.html', {'form': AuthenticationForm})
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'todo/loginuser.html',
+            return render(request, 'todo/login_user.html',
                           {'form': AuthenticationForm(), 'error': 'Пароль или имя пользователя не совпадают'})
         else:
             login(request, user)
@@ -78,7 +78,7 @@ def create_todo(request):
 
 
 @login_required
-def completetodo(request, todo_pk):
+def complete_todo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
         todo.datecompleted = timezone.now()
@@ -87,7 +87,7 @@ def completetodo(request, todo_pk):
 
 
 @login_required
-def deletetodo(request, todo_pk):
+def delete_todo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
         todo.delete()
@@ -95,22 +95,22 @@ def deletetodo(request, todo_pk):
 
 
 @login_required
-def viewtodo(request, todo_pk):
+def view_todo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'GET':
         form = TodoForm(instance=todo)
-        return render(request, 'todo/viewtodo.html', {'todo': todo, 'form': form})
+        return render(request, 'todo/view_todo.html', {'todo': todo, 'form': form})
     else:
         try:
             form = TodoForm(request.POST, instance=todo)
             form.save()
             return redirect('current_todos')
         except ValueError:
-            return render(request, 'todo/viewtodo.html', {'todo': todo, 'form': form, 'error': 'Bad info'})
+            return render(request, 'todo/view_todo.html', {'todo': todo, 'form': form, 'error': 'Bad info'})
 
 
 @login_required
-def logoutuser(request):
+def logout_user(request):
     if request.method == 'POST':
         logout(request)
         return redirect('home')
