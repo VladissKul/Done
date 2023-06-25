@@ -43,7 +43,7 @@ urlpatterns = [
     path('todo/<int:todo_pk>/delete', views.delete_todo, name='delete_todo'),
     path('', views.home, name='home'),
     # Notes
-    path('create_note', create_note, name='create_note'),
+    path('create_note/', create_note, name='create_note'),
     path('notes_list/', notes_list, name='notes_list'),
     path('notes_list/<int:note_id>', note_detail, name='note_detail'),
     path('notes_list/<int:note_id>/delete', delete_note, name='delete_note'),

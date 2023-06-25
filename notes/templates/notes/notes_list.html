@@ -15,7 +15,7 @@
       </div>
             <div class="list-group">
                 {% for note in notes %}
-                    <a href="{% url 'note_detail' note.id %}" class="list-group-item list-group-item-action"><b>{{ note.title }}</b></a>
+                    <a href="{% url 'note_detail' note.id %}" class="list-group-item list-group-item-action mb-2"><b>{{ note.title }}</b></a>
                 {% endfor %}
             </div>
         {% else %}

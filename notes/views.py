@@ -7,16 +7,17 @@ from .models import Note
 
 @login_required
 def create_note(request):
-    if request.method == 'POST':
-        form = NoteForm(request.POST)
-        if form.is_valid():
-            note = form.save(commit=False)
-            note.user = request.user
-            note.save()
-            return redirect('notes_list')
+    if request.method == 'GET':
+        return render(request, 'notes/create_note.html', {'form': NoteForm()})
     else:
-        form = NoteForm(initial={'user': request.user})
-    return render(request, 'notes/create_note.html', {'form': form})
+        try:
+            form = NoteForm(request.POST)
+            new_note = form.save(commit=False)
+            new_note.user = request.user
+            new_note.save()
+            return redirect('notes_list')
+        except ValueError:
+            return render(request, 'notes/create_note.html', {'form': NoteForm(), 'error': 'Bad data passed in'})
 
 
 @login_required()
