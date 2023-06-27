@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from todo import views
 from rest_framework import routers
-from todo.views import TodoViewSet
+
+from account.views import *
 from notes.views import *
+from todo.views import *
 
 todo_router = routers.SimpleRouter()
 todo_router.register(r'all_todos', TodoViewSet)
@@ -27,21 +28,21 @@ urlpatterns = [
     # API
     path('api/', include(todo_router.urls)),
     # Healthcheck
-    path('healthcheck', views.healthcheck, name='healthcheck'),
+    path('healthcheck', healthcheck, name='healthcheck'),
     # Admin
     path('admin/', admin.site.urls),
     # Auth
-    path('signup/', views.signup_user, name='signup_user'),
-    path('logout/', views.logout_user, name='logout_user'),
-    path('login/', views.login_user, name='login_user'),
+    path('signup/', signup_user, name='signup_user'),
+    path('logout/', logout_user, name='logout_user'),
+    path('login/', login_user, name='login_user'),
     # Todos
-    path('create_todo/', views.create_todo, name='create_todo'),
-    path('current_todos/', views.current_todos, name='current_todos'),
-    path('completed_todos/', views.completed_todos, name='completed_todos'),
-    path('todo/<int:todo_pk>', views.view_todo, name='view_todo'),
-    path('todo/<int:todo_pk>/complete', views.complete_todo, name='complete_todo'),
-    path('todo/<int:todo_pk>/delete', views.delete_todo, name='delete_todo'),
-    path('', views.home, name='home'),
+    path('create_todo/', create_todo, name='create_todo'),
+    path('current_todos/', current_todos, name='current_todos'),
+    path('completed_todos/', completed_todos, name='completed_todos'),
+    path('todo/<int:todo_pk>', view_todo, name='view_todo'),
+    path('todo/<int:todo_pk>/complete', complete_todo, name='complete_todo'),
+    path('todo/<int:todo_pk>/delete', delete_todo, name='delete_todo'),
+    path('', home, name='home'),
     # Notes
     path('create_note/', create_note, name='create_note'),
     path('notes_list/', notes_list, name='notes_list'),
@@ -49,5 +50,3 @@ urlpatterns = [
     path('notes_list/<int:note_id>/delete', delete_note, name='delete_note'),
 
 ]
-
-

@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'todo',
     'notes',
+    'account',
 ]
 
 REST_FRAMEWORK = {
