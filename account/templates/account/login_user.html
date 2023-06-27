@@ -15,11 +15,11 @@
             {% endif %}
             <form method="POST">
                 {% csrf_token %}
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="username">Имя пользователя</label>
                     <input type="text" name="username" class="form-control" id="username">
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="password">Пароль</label>
                     <input type="password" name="password" class="form-control" id="password">
                 </div>

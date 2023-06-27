@@ -11,12 +11,12 @@
         <div class="col-md-5">
             <form method="POST">
                 {% csrf_token %}
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="title">Заголовок</label>
                     <input type="text" name="title" class="form-control" id="title" value="{{ note.title }}" required>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mb-3">
                     <label for="text">Описание</label>
                     <textarea name="text" rows="5" class="form-control" id="memo" >{{ note.text }}</textarea>
                 </div>
